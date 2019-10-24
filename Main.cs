@@ -17,6 +17,7 @@ using static BTDModLoader.SerealizeConfig;
 using System.Diagnostics;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
 
 namespace BTDModLoader
 {
@@ -216,10 +217,13 @@ namespace BTDModLoader
                 thread.Start();
             }
             seriealizeConfig();
-            ZipFile zip = ZipFile.Read(livePath + "\\Mods\\" + ModsListBox.SelectedItem.ToString());
-            foreach (ZipEntry zipa in zip)
+            if(ModsListBox.SelectedItem.ToString()!="No Mods")
             {
-                zipa.Extract(gamePath, ExtractExistingFileAction.OverwriteSilently);
+                ZipFile zip = ZipFile.Read(livePath + "\\Mods\\" + ModsListBox.SelectedItem.ToString());
+                foreach (ZipEntry zipa in zip)
+                {
+                    zipa.Extract(gamePath, ExtractExistingFileAction.OverwriteSilently);
+                }
             }
 
 
@@ -293,9 +297,29 @@ namespace BTDModLoader
         {
             Thread.Sleep(3000);
             //Auto download latest nkhook exe <3 ~DisabledMallis
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             WebClient client = new WebClient();
-            JObject parsed = JObject.Parse(client.DownloadString("https://api.github.com/repos/DisabledMallis/NKHook5/releases"));
-            MessageBox.Show(parsed.GetValue("html_url").ToString());
+            client.Headers.Add("user-agent", " Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0"); //spoof using firefox so we dont get 403 forbidden error
+            JArray parsedArray = JArray.Parse(client.DownloadString("https://api.github.com/repos/DisabledMallis/NKHook5/releases"));
+            string downloadLink = "";
+            JObject o = parsedArray.Children<JObject>().First();
+            foreach (JProperty p in o.Properties())
+            {
+                string name = p.Name;
+                if (name == "assets")
+                {
+                    JObject assets = p.Value.Children<JObject>().First();
+                    foreach (JProperty np in assets.Properties())
+                    {
+                        string dlname = np.Name;
+                        if (dlname == "browser_download_url")
+                        {
+                            downloadLink = np.Value.ToString();
+                        }
+                    }
+                }
+            }
+            client.DownloadFile(downloadLink, livePath + "\\NKHook5.exe");
             try
             {
                 Process.Start(livePath + "\\NKHook5.exe");
