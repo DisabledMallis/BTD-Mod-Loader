@@ -39,6 +39,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -160,9 +161,23 @@
             this.richTextBox1.ForeColor = System.Drawing.SystemColors.Window;
             this.richTextBox1.Location = new System.Drawing.Point(664, 317);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(194, 100);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F);
+            this.richTextBox2.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.richTextBox2.Location = new System.Drawing.Point(336, 156);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.ReadOnly = true;
+            this.richTextBox2.Size = new System.Drawing.Size(269, 282);
+            this.richTextBox2.TabIndex = 10;
+            this.richTextBox2.Text = "NKHook Plugins not currently supported with BTDB";
             // 
             // Main
             // 
@@ -170,6 +185,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(884, 499);
+            this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -180,6 +196,7 @@
             this.Controls.Add(this.ModsListBox);
             this.Controls.Add(this.LaunchGame);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "BTD5 Mod Loader by Gurrenm3";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
@@ -202,6 +219,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }
 
