@@ -41,6 +41,7 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -185,12 +186,23 @@
             this.richTextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
             this.richTextBox3.ForeColor = System.Drawing.SystemColors.Control;
-            this.richTextBox3.Location = new System.Drawing.Point(-1, 0);
+            this.richTextBox3.Location = new System.Drawing.Point(-2, 0);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.ReadOnly = true;
             this.richTextBox3.Size = new System.Drawing.Size(886, 502);
             this.richTextBox3.TabIndex = 11;
             this.richTextBox3.Text = resources.GetString("richTextBox3.Text");
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.25F);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(9, 26);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(242, 36);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "BTD Mod Loader";
             // 
             // Main
             // 
@@ -198,6 +210,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(884, 499);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.richTextBox1);
@@ -212,7 +225,7 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
-            this.Text = "BTD5 Mod Loader by Gurrenm3";
+            this.Text = "BTD Mod Loader by Gurrenm3";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -235,6 +248,7 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.RichTextBox richTextBox3;
+        private System.Windows.Forms.Label label3;
     }
 }
 

@@ -95,13 +95,13 @@ namespace BTDModLoader
         {
             if (game == "BTD5")
             {
-                ModLoaderText.Text = "BTD5 Mod Loader";
+                label3.Text = "BTD5 Mod Loader";
                 richTextBox2.SendToBack();
                 richTextBox3.SendToBack();
             }
             if (game == "Battles")
             {
-                ModLoaderText.Text = "BTDB Mod Loader";
+                label3.Text = "BTDB Mod Loader";
                 richTextBox2.BringToFront();
                 richTextBox3.SendToBack();
             }
@@ -109,10 +109,8 @@ namespace BTDModLoader
         }
         private void firstTimeUsingProgram()
         {
-            
-            MessageBox.Show("Main config file not found...");
-
             richTextBox3.BringToFront();
+            label3.SendToBack();
 
             Directory.CreateDirectory(livePath + "\\Plugins");
             Directory.CreateDirectory(livePath + "\\Plugins\\Unloaded Plugins");
@@ -124,14 +122,9 @@ namespace BTDModLoader
             browseForBTD5Folder();
             seriealizeConfig();
             richTextBox3.SendToBack();
-
-
-            /*Thread thread = new Thread(backupGame);
-            thread.Start();*/
         }
         private void browseForBTD5Folder()
         {
-            
             FolderBrowserDialog btd5FolderBrowse = new FolderBrowserDialog();
             if (btd5FolderBrowse.ShowDialog() == DialogResult.OK)
             {
@@ -150,9 +143,20 @@ namespace BTDModLoader
                     gamePath = tempGamePath;
 
                     if (filename == "BTD5-Win.exe")
+                    {
                         game = "BTD5";
+                        richTextBox2.SendToBack();
+                        label3.Text = "BTD5 Mod Loader";
+                        label3.Refresh();
+                    }
                     else if (filename == "Battles-Win.exe")
+                    {
                         game = "Battles";
+                        richTextBox2.BringToFront();
+                        label3.Text = "BTDB Mod Loader";
+                        label3.Refresh();
+                    }
+                        
                 }
             }
             else
