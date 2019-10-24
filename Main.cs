@@ -15,6 +15,8 @@ using System.Windows.Forms;
 using static System.Environment;
 using static BTDModLoader.SerealizeConfig;
 using System.Diagnostics;
+using System.Net;
+using Newtonsoft.Json.Linq;
 
 namespace BTDModLoader
 {
@@ -64,7 +66,7 @@ namespace BTDModLoader
                 firstTimeUsingProgram();
             }
 
-            var file = Directory.GetFiles(livePath + "\\Game Backup", "BTD5-Win.exe").FirstOrDefault();
+            string file = Directory.GetFiles(livePath + "\\Game Backup", "BTD5-Win.exe").FirstOrDefault();
             if (file == null)
             {
                 backupGame();
@@ -86,7 +88,7 @@ namespace BTDModLoader
             Directory.CreateDirectory(livePath + "\\Plugins\\Unloaded Plugins");
             Directory.CreateDirectory(livePath + "\\Mods");
             Directory.CreateDirectory(livePath + "\\Game Backup");
-            File.Create(livePath + "\\Plugins\\PUT YOUR PLUGINS INSIDE 'UNLOADED PLUGINS' FOLDER.TXT");
+            File.Create(livePath + "\\Plugins\\PUT YOUR PLUGINS INSIDE 'UNLOADED PLUGINS' FOLDER.TXT").Close();
 
             //Find btd5 folder
             browseForBTD5Folder();
@@ -223,8 +225,8 @@ namespace BTDModLoader
                 {
                     if (File.Exists(livePath + "\\Plugins\\Unloaded Plugins\\" + filename))
                     {
-                        File.Delete(livePath + "\\Plugins\\Unloaded Plugins\\" + filename)
-;                    }
+                        File.Delete(livePath + "\\Plugins\\Unloaded Plugins\\" + filename);
+                    }
 
                     File.Copy(plugin, livePath + "\\Plugins\\Unloaded Plugins\\" + filename);
                     File.Delete(plugin);
@@ -246,7 +248,7 @@ namespace BTDModLoader
                 Thread thread = new Thread(launchExe);
                 thread.Start();
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch(Win32Exception)
             {
                 MessageBox.Show("NKHook5.exe not found! Please add NKhook5.exe to the main directory of this program");
             }
@@ -254,11 +256,15 @@ namespace BTDModLoader
         private void launchExe()
         {
             Thread.Sleep(3000);
+            //Auto download latest nkhook exe <3 ~DisabledMallis
+            WebClient client = new WebClient();
+            JObject parsed = JObject.Parse(client.DownloadString("https://api.github.com/repos/DisabledMallis/NKHook5/releases"));
+            MessageBox.Show(parsed.GetValue("html_url").ToString());
             try
             {
                 Process.Start(livePath + "\\NKHook5.exe");
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch(Win32Exception)
             {
                 if (richTextBox1.InvokeRequired)
                     this.Invoke((MethodInvoker)delegate ()
