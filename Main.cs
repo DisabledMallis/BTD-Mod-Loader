@@ -37,7 +37,6 @@ namespace BTDModLoader
         public Main()
         {
             InitializeComponent();
-            CreateExampleMod();
             try
             {
                 string json = File.ReadAllText(livePath + profilePath);
@@ -413,57 +412,6 @@ namespace BTDModLoader
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
             seriealizeConfig();
-        }
-        private void CreateExampleMod()
-        {
-            string readme = "To properly use mods with this program, you need to have them in a .ZIP folder, WITH all of the necessary subdirectories. This program allows users to modify anything and save it, so you need to specify which folders your mods are from. For example, You have to have an 'Assets' folder in your .ZIP, and in your 'Assets' folder is your BTD5.Jet or Data.Jet. You don't need to make all of the folders, just the ones for the files that you edited.";
-
-            Directory.CreateDirectory(livePath + "\\Mods\\Assets\\");
-            Directory.CreateDirectory(livePath + "\\Mods\\Assets\\Audio");
-            Directory.CreateDirectory(livePath + "\\Mods\\Assets\\Textures");
-            Directory.CreateDirectory(livePath + "\\Mods\\Assets\\Textures\\Ultra");
-            File.Create(livePath + "\\Mods\\Assets\\Example_BTD5.Jet");
-            File.Create(livePath + "\\Mods\\Assets\\Audio\\EditedAudioFiles.txt");
-            File.Create(livePath + "\\Mods\\Assets\\Textures\\Ultra\\EditedTexture.png");
-            File.AppendAllText(livePath + "\\Mods\\README.txt", readme);
-
-            DirectoryInfo di = new DirectoryInfo(livePath + "\\Mods");
-            FileInfo[] filePaths = di.GetFiles("*", SearchOption.AllDirectories);
-
-            //string[] filePaths = Directory.GetFiles(livePath + "\\Mods", SearchOption.AllDirectories);
-            ZipFile exampleMod = new ZipFile();
-            //foreach (string item in filePaths)
-            foreach (FileInfo item in filePaths)
-            {
-                // If the item is a file
-                if (File.Exists(item.ToString()))
-                {
-                    MessageBox.Show(item.ToString());
-                    // Add the file in the root folder inside our zip file
-                    exampleMod.AddFile(item.ToString(), "*");
-                }
-                // if the item is a folder    
-                else if (Directory.Exists(item.ToString()))
-                {
-                    // Add the folder in our zip file with the folder name as its name
-                    exampleMod.AddDirectory(item.ToString(), new DirectoryInfo(item.ToString()).Name);
-                }
-            }
-            // Finally save the zip file to the destination we want
-            exampleMod.Save(livePath + "\\Mods\\ExampleMod.zip");
-        }
-        private void test ()
-        {
-
-            //exampleMod.AddDirectory(livePath + "\\Mods");
-            //exampleMod.Name = livePath + "\\Mods\\ExampleMod.zip";
-            //exampleMod.Save();
-            //exampleMod.AddFiles(livePath + "\\Mods", false, "");
-
-
-
-            // Loop through all the items.
-            
         }
     }
 }
