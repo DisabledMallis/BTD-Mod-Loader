@@ -15579,4 +15579,9 @@
         AAAAAIDhOeSQfwHmGugL9Oe95AAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="richTextBox3.Text" xml:space="preserve">
+    <value>• Please browse for your BTD installation folder. We need the directory with  " BTD5-Win.exe"  OR  "Battles-Win.exe"
+•Please make sure that your game is not modded in any way so we can make a proper backup.
+• Here is an example directory: 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\BloonsTD5'</value>
+  </data>
 </root>

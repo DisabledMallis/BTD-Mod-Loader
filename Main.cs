@@ -27,6 +27,7 @@ namespace BTDModLoader
         internal string gamePath;
         internal string lastMod;
         internal string lastPlugin;
+        internal static bool userUnderstands = false;
         string currentMod;
         string game;
         string profilePath = "\\Config\\profile.json";
@@ -36,6 +37,7 @@ namespace BTDModLoader
         public Main()
         {
             InitializeComponent();
+
             try
             {
                 string json = File.ReadAllText(livePath + profilePath);
@@ -67,11 +69,25 @@ namespace BTDModLoader
                 firstTimeUsingProgram();
             }
 
-            string file = Directory.GetFiles(livePath + "\\Game Backup", "BTD5-Win.exe").FirstOrDefault();
-            if (file == null)
+            if (game == "BTD5")
             {
-                backupGame();
+                string file = Directory.GetFiles(livePath + "\\Game Backup", "BTD5-Win.exe").FirstOrDefault();
+                if (file == null)
+                {
+                    Thread thread = new Thread(backupGame);
+                    thread.Start();
+                }
             }
+            else if (game == "Battles")
+            {
+                string file = Directory.GetFiles(livePath + "\\Game Backup", "Battles-Win.exe").FirstOrDefault();
+                if (file == null)
+                {
+                    Thread thread = new Thread(backupGame);
+                    thread.Start();
+                }
+            }
+            
             PopulateModListBox();
             PopulatePluginListBox();
         }
@@ -81,36 +97,41 @@ namespace BTDModLoader
             {
                 ModLoaderText.Text = "BTD5 Mod Loader";
                 richTextBox2.SendToBack();
+                richTextBox3.SendToBack();
             }
             if (game == "Battles")
             {
                 ModLoaderText.Text = "BTDB Mod Loader";
                 richTextBox2.BringToFront();
+                richTextBox3.SendToBack();
             }
             this.MaximizeBox = false;
         }
         private void firstTimeUsingProgram()
         {
+            
             MessageBox.Show("Main config file not found...");
+
+            richTextBox3.BringToFront();
+
             Directory.CreateDirectory(livePath + "\\Plugins");
             Directory.CreateDirectory(livePath + "\\Plugins\\Unloaded Plugins");
             Directory.CreateDirectory(livePath + "\\Mods");
             Directory.CreateDirectory(livePath + "\\Game Backup");
             File.Create(livePath + "\\Plugins\\PUT YOUR PLUGINS INSIDE 'UNLOADED PLUGINS' FOLDER.TXT").Close();
 
-            //Find btd5 folder
+            this.Show();
             browseForBTD5Folder();
             seriealizeConfig();
+            richTextBox3.SendToBack();
 
-            Thread thread = new Thread(backupGame);
-            thread.Start();
+
+            /*Thread thread = new Thread(backupGame);
+            thread.Start();*/
         }
         private void browseForBTD5Folder()
         {
-            MessageBox.Show("Please browse for your BTD5 installation folder");
-            MessageBox.Show("Please make sure that your game is not modded in any way so we can make a proper backup.");
-            MessageBox.Show("Example directory: 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\BloonsTD5'");
-
+            
             FolderBrowserDialog btd5FolderBrowse = new FolderBrowserDialog();
             if (btd5FolderBrowse.ShowDialog() == DialogResult.OK)
             {
@@ -148,11 +169,10 @@ namespace BTDModLoader
                     SearchOption.AllDirectories))
                     Directory.CreateDirectory(dirPath.Replace(gamePath, livePath + "\\Game Backup"));
 
-                //Copy all the files & Replaces any files with the same name
+                //Copy all the files
                 foreach (string newPath in Directory.GetFiles(gamePath, "*.*",
                     SearchOption.AllDirectories))
-                    if (File.Exists(newPath) == false)
-                        File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), false);
+                    File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), false);
             }
             else
             {
@@ -213,11 +233,11 @@ namespace BTDModLoader
             //Start injecting mod stuff
             if (currentMod != lastMod)
             {
-                Thread thread = new Thread(RestoreGame);
-                thread.Start();
+                RestoreGame();
             }
             seriealizeConfig();
-            if(ModsListBox.SelectedItem.ToString()!="No Mods")
+
+            if (ModsListBox.SelectedItem.ToString() != "No Mods")
             {
                 ZipFile zip = ZipFile.Read(livePath + "\\Mods\\" + ModsListBox.SelectedItem.ToString());
                 foreach (ZipEntry zipa in zip)
@@ -225,7 +245,6 @@ namespace BTDModLoader
                     zipa.Extract(gamePath, ExtractExistingFileAction.OverwriteSilently);
                 }
             }
-
 
             //start injecting zip stuff
             string[] selectedPlugins = PluginsListBox.SelectedItems.OfType<string>().ToArray();
@@ -253,6 +272,7 @@ namespace BTDModLoader
                     File.Delete(livePath + "\\Plugins\\Unloaded Plugins\\" + plugin);
                 }
             }
+            
             try
             {
                 //Sleep for 2 seconds to help with program delete old mod
@@ -283,15 +303,13 @@ namespace BTDModLoader
             }
             catch (System.ComponentModel.Win32Exception)
             {
-                /*if (richTextBox1.InvokeRequired)
-                    this.Invoke((MethodInvoker)delegate ()
-                    {
-                        richTextBox1.Text = "Applying mods/plugins. This will take a few seconds";
-                        richTextBox1.Refresh();
-                        Thread.Sleep(2500);
-                        richTextBox1.Text = "";
-                    });*/
+                
             }
+            if (this.InvokeRequired)
+                this.Invoke((MethodInvoker)delegate ()
+                {
+                    this.Close();
+                }); 
         }
         private void launchNKHook()
         {
@@ -345,7 +363,7 @@ namespace BTDModLoader
                 });
             foreach (string dirPath in Directory.GetDirectories(livePath + "\\Game Backup", "*", SearchOption.AllDirectories))
                 Directory.CreateDirectory(dirPath.Replace(livePath + "\\Game Backup", gamePath));
-            foreach(string gamePathFile in Directory.GetFiles(gamePath))
+            foreach(string gamePathFile in Directory.GetFiles(gamePath, "*.*", SearchOption.AllDirectories))
                 File.Delete(gamePathFile);
             foreach (string newPath in Directory.GetFiles(livePath + "\\Game Backup", "*.*", SearchOption.AllDirectories))
                 File.Copy(newPath, newPath.Replace(livePath + "\\Game Backup", gamePath), true);
