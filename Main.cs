@@ -75,9 +75,16 @@ namespace BTDModLoader
         private void Main_Load(object sender, EventArgs e)
         {
             if (game == "BTD5")
+            {
                 ModLoaderText.Text = "BTD5 Mod Loader";
+                richTextBox2.SendToBack();
+            }
             if (game == "Battles")
+            {
                 ModLoaderText.Text = "BTDB Mod Loader";
+                richTextBox2.BringToFront();
+            }
+            this.MaximizeBox = false;
         }
         private void firstTimeUsingProgram()
         {
@@ -141,7 +148,8 @@ namespace BTDModLoader
                 //Copy all the files & Replaces any files with the same name
                 foreach (string newPath in Directory.GetFiles(gamePath, "*.*",
                     SearchOption.AllDirectories))
-                    File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), true);
+                    if (File.Exists(newPath) == false)
+                        File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), false);
             }
             else
             {
@@ -243,15 +251,43 @@ namespace BTDModLoader
             {
                 //Sleep for 2 seconds to help with program delete old mod
                 //
-                Thread thread = new Thread(launchExe);
-                thread.Start();
+                if (game == "BTD5")
+                {
+                    Thread thread = new Thread(launchNKHook);
+                    thread.Start();
+                }
+                else if (game == "Battles")
+                {
+                    Thread thread = new Thread(launchBTDB);
+                    thread.Start();
+                }
+                
             }
             catch(System.ComponentModel.Win32Exception)
             {
                 MessageBox.Show("NKHook5.exe not found! Please add NKhook5.exe to the main directory of this program");
             }
         }
-        private void launchExe()
+        private void launchBTDB()
+        {
+            Thread.Sleep(3000);
+            try
+            {
+                Process.Start(gamePath + "\\Battles-Win.exe");
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                /*if (richTextBox1.InvokeRequired)
+                    this.Invoke((MethodInvoker)delegate ()
+                    {
+                        richTextBox1.Text = "Applying mods/plugins. This will take a few seconds";
+                        richTextBox1.Refresh();
+                        Thread.Sleep(2500);
+                        richTextBox1.Text = "";
+                    });*/
+            }
+        }
+        private void launchNKHook()
         {
             Thread.Sleep(3000);
             try
@@ -263,7 +299,7 @@ namespace BTDModLoader
                 if (richTextBox1.InvokeRequired)
                     this.Invoke((MethodInvoker)delegate ()
                     {
-                        richTextBox1.Text = "User cancelled NKHook. Press launch again to play with mods..";
+                        richTextBox1.Text = "NKHook cancelled or not found... If you didn't cancel the program please add NKHook5.exe to the main directory of this program";
                         richTextBox1.Refresh();
                         Thread.Sleep(2500);
                         richTextBox1.Text = "";
