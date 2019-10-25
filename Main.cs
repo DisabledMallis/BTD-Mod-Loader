@@ -310,19 +310,29 @@ namespace BTDModLoader
         }
         public bool IsGameRunning(string name)
         {
-            //here we're going to get a list of all running processes on
-            //the computer
             foreach (Process clsProcess in Process.GetProcesses())
             {
                 if (clsProcess.ProcessName.Contains(name))
                 {
-                    //if the process is found to be running then we
-                    //return a true
                     return true;
                 }
             }
-            //otherwise we return a false
             return false;
+        }
+
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BackupGameFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            backupGame();
+        }
+
+        private void RestoreGameFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreGame();
         }
     }
 }

@@ -254,20 +254,23 @@ namespace BTDModLoader
             // backupGameFilesToolStripMenuItem
             // 
             this.backupGameFilesToolStripMenuItem.Name = "backupGameFilesToolStripMenuItem";
-            this.backupGameFilesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.backupGameFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.backupGameFilesToolStripMenuItem.Text = "Backup game files";
+            this.backupGameFilesToolStripMenuItem.Click += new System.EventHandler(this.BackupGameFilesToolStripMenuItem_Click);
             // 
             // restoreGameFilesToolStripMenuItem
             // 
             this.restoreGameFilesToolStripMenuItem.Name = "restoreGameFilesToolStripMenuItem";
-            this.restoreGameFilesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.restoreGameFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.restoreGameFilesToolStripMenuItem.Text = "Restore game files";
+            this.restoreGameFilesToolStripMenuItem.Click += new System.EventHandler(this.RestoreGameFilesToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
             // toolStripDropDownButton2
             // 
