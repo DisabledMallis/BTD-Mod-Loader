@@ -119,6 +119,7 @@ namespace BTDModLoader
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(314, 128);
@@ -187,7 +188,7 @@ namespace BTDModLoader
             this.richTextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
             this.richTextBox3.ForeColor = System.Drawing.SystemColors.Control;
-            this.richTextBox3.Location = new System.Drawing.Point(0, 26);
+            this.richTextBox3.Location = new System.Drawing.Point(-2, 23);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.ReadOnly = true;
             this.richTextBox3.Size = new System.Drawing.Size(886, 578);
@@ -254,21 +255,21 @@ namespace BTDModLoader
             // backupGameFilesToolStripMenuItem
             // 
             this.backupGameFilesToolStripMenuItem.Name = "backupGameFilesToolStripMenuItem";
-            this.backupGameFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.backupGameFilesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.backupGameFilesToolStripMenuItem.Text = "Backup game files";
             this.backupGameFilesToolStripMenuItem.Click += new System.EventHandler(this.BackupGameFilesToolStripMenuItem_Click);
             // 
             // restoreGameFilesToolStripMenuItem
             // 
             this.restoreGameFilesToolStripMenuItem.Name = "restoreGameFilesToolStripMenuItem";
-            this.restoreGameFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restoreGameFilesToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.restoreGameFilesToolStripMenuItem.Text = "Restore game files";
             this.restoreGameFilesToolStripMenuItem.Click += new System.EventHandler(this.RestoreGameFilesToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
@@ -318,12 +319,12 @@ namespace BTDModLoader
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.ModLoaderText);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.PluginsListBox);
             this.Controls.Add(this.ModsListBox);
             this.Controls.Add(this.LaunchGame);
             this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
