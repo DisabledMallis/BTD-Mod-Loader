@@ -23,139 +23,108 @@ namespace BTDModLoader
 {
     public partial class Main : Form
     {
-        public string livePath = Environment.CurrentDirectory;
-        internal string gamePath;
-        internal string lastMod;
-        internal string lastPlugin;
-        internal static bool userUnderstands = false;
-        string currentMod;
-        string game;
-        string profilePath = "\\Config\\profile.json";
-        string serializeOutput;
         MainForm mainForm;
+        internal static string livePath = Environment.CurrentDirectory;
+
+        internal static string game;
+        internal static string gamePath;
+        internal static string profilePath = "\\Config\\profile.json";
+
+        internal static string lastMod;
+        internal static string currentMod;
+        internal static string exeName;
 
         public Main()
         {
             InitializeComponent();
-            try
-            {
-                string json = File.ReadAllText(livePath + profilePath);
-                MainForm deserializedMainForm = JsonConvert.DeserializeObject<MainForm>(json);
-                game = deserializedMainForm.Game;
-                gamePath = deserializedMainForm.GameDir;
-                lastMod = deserializedMainForm.LastMod;
-                lastPlugin = deserializedMainForm.LastPlugin;
-            }
-            catch (FileNotFoundException)
-            {
-                firstTimeUsingProgram();
-            }
-            catch (DirectoryNotFoundException)
-            {
-                Directory.CreateDirectory(livePath + "\\Config");
-                try
-                {
-                    string json = File.ReadAllText(livePath + profilePath);
-                }
-                catch (FileNotFoundException)
-                {
-                    firstTimeUsingProgram();
-                }
-            }
-            if (gamePath == null || gamePath == "")
-            {
-                MessageBox.Show("Game Directory is invalid, please browse again");
-                firstTimeUsingProgram();
-            }
-
-            if (game == "BTD5")
-            {
-                string file = Directory.GetFiles(livePath + "\\Game Backup", "BTD5-Win.exe").FirstOrDefault();
-                if (file == null)
-                {
-                    Thread thread = new Thread(backupGame);
-                    thread.Start();
-                }
-            }
-            else if (game == "Battles")
-            {
-                string file = Directory.GetFiles(livePath + "\\Game Backup", "Battles-Win.exe").FirstOrDefault();
-                if (file == null)
-                {
-                    Thread thread = new Thread(backupGame);
-                    thread.Start();
-                }
-            }
-            
             PopulateModListBox();
             PopulatePluginListBox();
         }
         private void Main_Load(object sender, EventArgs e)
         {
-            if (game == "BTD5")
-            {
-                label3.Text = "BTD5 Mod Loader";
-                richTextBox2.SendToBack();
-                richTextBox3.SendToBack();
-            }
-            if (game == "Battles")
-            {
-                label3.Text = "BTDB Mod Loader";
-                richTextBox2.BringToFront();
-                richTextBox3.SendToBack();
-            }
             this.MaximizeBox = false;
-        }
-        private void firstTimeUsingProgram()
-        {
-            richTextBox3.BringToFront();
-            label3.SendToBack();
-
-            Directory.CreateDirectory(livePath + "\\Plugins");
-            Directory.CreateDirectory(livePath + "\\Plugins\\Unloaded Plugins");
-            Directory.CreateDirectory(livePath + "\\Mods");
-            Directory.CreateDirectory(livePath + "\\Game Backup");
-            File.Create(livePath + "\\Plugins\\PUT YOUR PLUGINS INSIDE 'UNLOADED PLUGINS' FOLDER.TXT").Close();
-
             this.Show();
-            browseForBTD5Folder();
-            seriealizeConfig();
+            PrintToConsole("Program Starting...");
+            try
+            {
+                string serializedConfig = File.ReadAllText(livePath + profilePath);
+                MainForm deserializedConfig = JsonConvert.DeserializeObject<MainForm>(serializedConfig);
+
+                game = deserializedConfig.Game;
+                exeName = deserializedConfig.ExeName;
+                gamePath = deserializedConfig.GameDir;
+                lastMod = deserializedConfig.LastMod;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                PrintToConsole("\nDirectories not found. \nCreating directories...");
+                Directory.CreateDirectory(livePath + "\\Config");
+                Directory.CreateDirectory(livePath + "\\Plugins");
+                Directory.CreateDirectory(livePath + "\\Plugins\\Unloaded Plugins");
+                File.Create(livePath + "\\Plugins\\PUT YOUR PLUGINS INSIDE 'UNLOADED PLUGINS' FOLDER.TXT").Close();
+                Directory.CreateDirectory(livePath + "\\Mods");
+                Directory.CreateDirectory(livePath + "\\Game Backup");
+            }
+            catch (FileNotFoundException)
+            {
+                richTextBox3.BringToFront();
+                label3.SendToBack();
+
+                browseForBTD5Folder();
+                seriealizeConfig();
+            }
             richTextBox3.SendToBack();
+            if (lastMod == null)
+            {
+                lastMod = "No Mods";
+                ModsListBox.SelectedIndex = 0;
+            }
+            //backup game if no backup exists
+            string file = Directory.GetFiles(livePath + "\\Game Backup", "*.exe").FirstOrDefault();
+            if (file == null)
+            {
+                PrintToConsole("\nNo backup detected...");
+                Thread thread = new Thread(backupGame);
+                thread.Start();
+            }
+            else
+            {
+                label3.Text = game + " Mod Loader";
+            }
+            PrintToConsole("\nProgram successfully loaded.");
+            PrintToConsole("\nGame: " + game);
+            PrintToConsole("\nChoose the mods/plugins you want to play with, then press 'Launch'");
+            PrintToConsole("\nChoose 'No Mods' or 'No Plugins' if you don't want to play with any mods or plugins");
         }
         private void browseForBTD5Folder()
         {
+            PrintToConsole("\nGame Directory hasn't been set. Please browse for your BTD Directory. Make sure it is the folder that has the EXE of the game you want to mod.");
             FolderBrowserDialog btd5FolderBrowse = new FolderBrowserDialog();
+            btd5FolderBrowse.Description = "Please browse for your BTD directory. Make sure you select the folder that has the .EXE of BTD5, BTDB, or Monkey City.";
+            btd5FolderBrowse.SelectedPath = "C:\\";
             if (btd5FolderBrowse.ShowDialog() == DialogResult.OK)
             {
-                string tempGamePath = btd5FolderBrowse.SelectedPath;
+                gamePath = btd5FolderBrowse.SelectedPath;
 
-                var file = Directory.GetFiles(tempGamePath, "*.exe").FirstOrDefault();
+                var file = Directory.GetFiles(gamePath, "*.exe").FirstOrDefault();
                 string filename = Path.GetFileName(file);
                 if (file == null)
                 {
-                    // Handle the file not being found
-                    MessageBox.Show("wrong directory");
+                    PrintToConsole("\nInvalid directory! Please select the directory that has the game EXE in it");
                     browseForBTD5Folder();
                 }
                 else
                 {
-                    gamePath = tempGamePath;
-
+                    exeName = filename;
                     if (filename == "BTD5-Win.exe")
                     {
                         game = "BTD5";
-                        richTextBox2.SendToBack();
-                        label3.Text = "BTD5 Mod Loader";
-                        label3.Refresh();
                     }
                     else if (filename == "Battles-Win.exe")
                     {
-                        game = "Battles";
-                        richTextBox2.BringToFront();
-                        label3.Text = "BTDB Mod Loader";
-                        label3.Refresh();
+                        game = "BTDB";
                     }
-                        
+                    PrintToConsole("\nGame: " + game);
                 }
             }
             else
@@ -165,158 +134,49 @@ namespace BTDModLoader
         }
         private void backupGame()
         {
-            if (Directory.Exists(gamePath))
-            {
-                //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(gamePath, "*",
-                    SearchOption.AllDirectories))
-                    Directory.CreateDirectory(dirPath.Replace(gamePath, livePath + "\\Game Backup"));
+            PrintToConsole("\nBacking up game files");
+            foreach (string dirPath in Directory.GetDirectories(gamePath, "*", SearchOption.AllDirectories))
+                Directory.CreateDirectory(dirPath.Replace(gamePath, livePath + "\\Game Backup"));
 
-                //Copy all the files
-                foreach (string newPath in Directory.GetFiles(gamePath, "*.*",
-                    SearchOption.AllDirectories))
-                    File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), false);
-            }
-            else
-            {
-                MessageBox.Show("Game Directory is invalid, please select your BTD5 Directory again...");
-                browseForBTD5Folder();
-                seriealizeConfig();
-            }
+            foreach (string newPath in Directory.GetFiles(gamePath, "*.*", SearchOption.AllDirectories))
+                File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), false);
         }
-        private void seriealizeConfig()
+         private void seriealizeConfig()
         {
-            mainForm = new MainForm(game, gamePath, currentMod, lastPlugin);
-            serializeOutput = JsonConvert.SerializeObject(mainForm);
+            mainForm = new MainForm(game, exeName, gamePath, currentMod);
 
             StreamWriter writeMainForm = new StreamWriter(livePath + profilePath, false);
-            writeMainForm.Write(serializeOutput);
+            writeMainForm.Write(JsonConvert.SerializeObject(mainForm));
             writeMainForm.Close();
         }
 
         private void ModsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             currentMod = ModsListBox.SelectedItem.ToString();
-        }
-
-        private void PluginsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                lastPlugin = PluginsListBox.SelectedItem.ToString();
-            }
-            catch(System.NullReferenceException)
-            {
-                PluginsListBox.SelectedIndex = 0;
-                lastPlugin = PluginsListBox.SelectedItem.ToString();
-            }
         }
 
         private void LaunchGame_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = "Applying mod/plugins... This will take a few seconds...";
-            try
+            if ((IsGameRunning(game) == true) || (IsGameRunning("Battles") == true))
+                PrintToConsole("\nGame is currently running!! You must exit " + game + " before continuing!!");
+            else
             {
-                currentMod = ModsListBox.SelectedItem.ToString();
-            }
-            catch(System.NullReferenceException)
-            {
-                ModsListBox.SelectedIndex = 0;
-            }
-            try
-            {
-                lastPlugin = PluginsListBox.SelectedItem.ToString();
-            }
-            catch (System.NullReferenceException)
-            {
-                PluginsListBox.SelectedIndex = 0;
-            }
-
-            //Start injecting mod stuff
-            if (currentMod != lastMod)
-            {
-                RestoreGame();
-            }
-            seriealizeConfig();
-
-            if (ModsListBox.SelectedItem.ToString() != "No Mods")
-            {
-                ZipFile zip = ZipFile.Read(livePath + "\\Mods\\" + ModsListBox.SelectedItem.ToString());
-                foreach (ZipEntry zipa in zip)
-                {
-                    zipa.Extract(gamePath, ExtractExistingFileAction.OverwriteSilently);
-                }
-            }
-
-            //start injecting zip stuff
-            string[] selectedPlugins = PluginsListBox.SelectedItems.OfType<string>().ToArray();
-            string[] loadedPlugins = Directory.GetFiles(livePath + "\\Plugins", "*.dll");
-            foreach (string plugin in loadedPlugins)
-            {
-                string filename = Path.GetFileName(plugin);
-                if (selectedPlugins.Contains(filename) == false)
-                {
-                    if (File.Exists(livePath + "\\Plugins\\Unloaded Plugins\\" + filename))
-                    {
-                        File.Delete(livePath + "\\Plugins\\Unloaded Plugins\\" + filename);
-                    }
-
-                    File.Copy(plugin, livePath + "\\Plugins\\Unloaded Plugins\\" + filename);
-                    File.Delete(plugin);
-                }
-            }
-
-            foreach (string plugin in selectedPlugins)
-            {
-                if (plugin != "No Plugins")
-                {
-                    File.Copy(livePath + "\\Plugins\\Unloaded Plugins\\" + plugin, livePath + "\\Plugins\\" + plugin);
-                    File.Delete(livePath + "\\Plugins\\Unloaded Plugins\\" + plugin);
-                }
-            }
-            
-            try
-            {
-                //Sleep for 2 seconds to help with program delete old mod
-                //
+                ApplyFiles();
+                seriealizeConfig();
+                PrintToConsole("\nLaunching " + game);
                 if (game == "BTD5")
                 {
-                    Thread thread = new Thread(launchNKHook);
+                    Thread thread = new Thread(launchWithNKHook);
                     thread.Start();
                 }
-                else if (game == "Battles")
+                else
                 {
-                    Thread thread = new Thread(launchBTDB);
-                    thread.Start();
+                    Process.Start(gamePath + "\\" + exeName);
                 }
-                
-            }
-            catch(Win32Exception)
-            {
-                MessageBox.Show("NKHook5.exe not found! Please add NKhook5.exe to the main directory of this program");
             }
         }
-        private void launchBTDB()
+        private void launchWithNKHook()
         {
-            Thread.Sleep(3000);
-            try
-            {
-                Process.Start(gamePath + "\\Battles-Win.exe");
-            }
-            catch (System.ComponentModel.Win32Exception)
-            {
-                
-            }
-            if (this.InvokeRequired)
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    this.Close();
-                }); 
-        }
-        private void launchNKHook()
-        {
-            Thread.Sleep(3000);
             //Auto download latest nkhook exe <3 ~DisabledMallis
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             WebClient client = new WebClient();
@@ -334,36 +194,79 @@ namespace BTDModLoader
                     {
                         string dlname = np.Name;
                         if (dlname == "browser_download_url")
-                        {
                             downloadLink = np.Value.ToString();
-                        }
                     }
                 }
             }
+            PrintToConsole("\nDownloading latest version of NKHook");
             client.DownloadFile(downloadLink, livePath + "\\NKHook5.exe");
             try
             {
                 Process.Start(livePath + "\\NKHook5.exe");
+                PrintToConsole("\nLaunching NKHook");
             }
-            catch(Win32Exception)
+            catch(System.ComponentModel.Win32Exception)
             {
-                if (richTextBox1.InvokeRequired)
-                    this.Invoke((MethodInvoker)delegate ()
+                PrintToConsole("\nNKHook was cancelled...");
+            }
+        }
+        private void ApplyFiles()
+        {
+            try
+            {
+                currentMod = ModsListBox.SelectedItem.ToString();
+            }
+            catch(System.NullReferenceException)
+            {
+                ModsListBox.SelectedIndex = 0;
+            }
+            PrintToConsole("\nYou chose to play with " + currentMod);
+            PrintToConsole("\nApplying mod/plugins... This may take a few seconds...");
+            if (currentMod != lastMod)
+            {
+                RestoreGame();
+                if (ModsListBox.SelectedItem.ToString() != "No Mods")
+                {
+                    ZipFile zip = ZipFile.Read(livePath + "\\Mods\\" + ModsListBox.SelectedItem.ToString());
+                    foreach (ZipEntry zipa in zip)
                     {
-                        richTextBox1.Text = "NKHook cancelled or not found... If you didn't cancel the program please add NKHook5.exe to the main directory of this program";
-                        richTextBox1.Refresh();
-                        Thread.Sleep(2500);
-                        richTextBox1.Text = "";
-                    });
+                        zipa.Extract(gamePath, ExtractExistingFileAction.OverwriteSilently);
+                    }
+                }
+            }
+            if (currentMod != "No Mods")
+                PrintToConsole("\n" + currentMod + " has been applied to " + game);
+            string[] selectedPlugins = PluginsListBox.SelectedItems.OfType<string>().ToArray();
+            string[] loadedPlugins = Directory.GetFiles(livePath + "\\Plugins", "*.dll");
+
+            //check if there are loaded plugins that arent selected for use and move them to Unused plugins
+            foreach (string plugin in loadedPlugins)
+            {
+                string filename = Path.GetFileName(plugin);
+                if (selectedPlugins.Contains(filename) == false)
+                {
+                    if (File.Exists(livePath + "\\Plugins\\Unloaded Plugins\\" + filename))
+                        File.Delete(livePath + "\\Plugins\\Unloaded Plugins\\" + filename);
+
+                    File.Copy(plugin, livePath + "\\Plugins\\Unloaded Plugins\\" + filename);
+                    File.Delete(plugin);
+                }
+            }
+
+            //Move any selected plugins that are not loaded to loaded plugins
+            foreach (string plugin in selectedPlugins)
+            {
+                if (plugin != "No Plugins")
+                {
+                    File.Copy(livePath + "\\Plugins\\Unloaded Plugins\\" + plugin, livePath + "\\Plugins\\" + plugin);
+                    File.Delete(livePath + "\\Plugins\\Unloaded Plugins\\" + plugin);
+                    PrintToConsole("\n" + plugin + " applied");
+                }
             }
         }
         private void RestoreGame()
         {
-            if (richTextBox1.InvokeRequired)
-                this.Invoke((MethodInvoker)delegate ()
-                {
-                    richTextBox1.Refresh();
-                });
+            PrintToConsole("\nRestoring original game files...");
             foreach (string dirPath in Directory.GetDirectories(livePath + "\\Game Backup", "*", SearchOption.AllDirectories))
                 Directory.CreateDirectory(dirPath.Replace(livePath + "\\Game Backup", gamePath));
             foreach(string gamePathFile in Directory.GetFiles(gamePath, "*.*", SearchOption.AllDirectories))
@@ -377,41 +280,49 @@ namespace BTDModLoader
             FileInfo[] files = di.GetFiles("*.zip", SearchOption.AllDirectories);
 
             foreach (FileInfo file in files)
-            {
-                
                 ModsListBox.Items.Add(file.Name);
-            }
-            try
-            {
-                ModsListBox.SelectedItem = lastMod;
-            }
-            catch
-            {
+
+            ModsListBox.SelectedItem = lastMod;
+            if (lastMod == null)
                 ModsListBox.SelectedIndex = 0;
-            }
         }
         private void PopulatePluginListBox()
         {
             DirectoryInfo di =new DirectoryInfo(livePath + "\\Plugins");
             FileInfo[] files = di.GetFiles("*.dll", SearchOption.AllDirectories);
 
+            PluginsListBox.SelectedIndex = 0;
             foreach (FileInfo file in files)
-            {
-                
                 PluginsListBox.Items.Add(file.Name);
-            }
-            try
-            {
-                PluginsListBox.SelectedItem = lastPlugin;
-            }
-            catch
-            {
-                PluginsListBox.SelectedIndex = 0;
-            }
         }
-        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        private void Main_FormClosed_1(object sender, FormClosedEventArgs e)
         {
             seriealizeConfig();
+        }
+        private void PrintToConsole(string message)
+        {
+            Console.Invoke((MethodInvoker)delegate()
+            {
+                Console.AppendText(message);
+                Console.SelectionStart = Console.Text.Length;
+                Console.ScrollToCaret();
+            });   
+        }
+        public bool IsGameRunning(string name)
+        {
+            //here we're going to get a list of all running processes on
+            //the computer
+            foreach (Process clsProcess in Process.GetProcesses())
+            {
+                if (clsProcess.ProcessName.Contains(name))
+                {
+                    //if the process is found to be running then we
+                    //return a true
+                    return true;
+                }
+            }
+            //otherwise we return a false
+            return false;
         }
     }
 }

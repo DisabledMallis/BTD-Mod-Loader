@@ -11,16 +11,16 @@ namespace BTDModLoader
         public class MainForm
         {
             public string Game { get; set; }
+            public string ExeName { get; set; }
             public string GameDir { get; set; }
             public string LastMod { get; set; }
-            public string LastPlugin { get; set; }
             
-            public MainForm(string game, string gameDir, string lastMod, string lastPlugin)
+            public MainForm(string game, string exeName, string gameDir, string lastMod)
             {
                 Game = game;
+                ExeName = exeName;
                 GameDir = gameDir;
                 LastMod = lastMod;
-                LastPlugin = lastPlugin;
             }
         }
     }
