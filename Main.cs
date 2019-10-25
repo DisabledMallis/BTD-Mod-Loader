@@ -73,24 +73,22 @@ namespace BTDModLoader
                 browseForBTD5Folder();
                 seriealizeConfig();
             }
+            if (game == null || exeName == null || gamePath == null)
+            {
+                richTextBox3.BringToFront();
+                label3.SendToBack();
+
+                browseForBTD5Folder();
+                seriealizeConfig();
+            }
+
             richTextBox3.SendToBack();
             if (lastMod == null)
             {
                 lastMod = "No Mods";
                 ModsListBox.SelectedIndex = 0;
             }
-            //backup game if no backup exists
-            string file = Directory.GetFiles(livePath + "\\Game Backup", "*.exe").FirstOrDefault();
-            if (file == null)
-            {
-                PrintToConsole("\nNo backup detected...");
-                Thread thread = new Thread(backupGame);
-                thread.Start();
-            }
-            else
-            {
-                label3.Text = game + " Mod Loader";
-            }
+            label3.Text = game + " Mod Loader";
             PrintToConsole("\nProgram successfully loaded.");
             PrintToConsole("\nGame: " + game);
             PrintToConsole("\nChoose the mods/plugins you want to play with, then press 'Launch'");
@@ -125,7 +123,13 @@ namespace BTDModLoader
                         game = "BTDB";
                     }
                     PrintToConsole("\nGame: " + game);
+                    label3.Text = game + " Mod Loader";
+                    label3.BringToFront();
                 }
+                PrintToConsole("\nNo backup detected...");
+                Thread thread = new Thread(backupGame);
+                thread.Start();
+                label3.Text = game + " Mod Loader";
             }
             else
             {
@@ -134,12 +138,13 @@ namespace BTDModLoader
         }
         private void backupGame()
         {
-            PrintToConsole("\nBacking up game files");
+            PrintToConsole("\nBacking up game files...");
             foreach (string dirPath in Directory.GetDirectories(gamePath, "*", SearchOption.AllDirectories))
                 Directory.CreateDirectory(dirPath.Replace(gamePath, livePath + "\\Game Backup"));
 
             foreach (string newPath in Directory.GetFiles(gamePath, "*.*", SearchOption.AllDirectories))
-                File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), false);
+                File.Copy(newPath, newPath.Replace(gamePath, livePath + "\\Game Backup"), true);
+            PrintToConsole("\nFinished backing up game files.");
         }
          private void seriealizeConfig()
         {
@@ -266,13 +271,21 @@ namespace BTDModLoader
         }
         private void RestoreGame()
         {
-            PrintToConsole("\nRestoring original game files...");
-            foreach (string dirPath in Directory.GetDirectories(livePath + "\\Game Backup", "*", SearchOption.AllDirectories))
-                Directory.CreateDirectory(dirPath.Replace(livePath + "\\Game Backup", gamePath));
-            foreach(string gamePathFile in Directory.GetFiles(gamePath, "*.*", SearchOption.AllDirectories))
-                File.Delete(gamePathFile);
-            foreach (string newPath in Directory.GetFiles(livePath + "\\Game Backup", "*.*", SearchOption.AllDirectories))
-                File.Copy(newPath, newPath.Replace(livePath + "\\Game Backup", gamePath), true);
+            try
+            {
+                PrintToConsole("\nReplacing game files with backup...");
+                foreach (string dirPath in Directory.GetDirectories(livePath + "\\Game Backup", "*", SearchOption.AllDirectories))
+                    Directory.CreateDirectory(dirPath.Replace(livePath + "\\Game Backup", gamePath));
+                foreach (string gamePathFile in Directory.GetFiles(gamePath, "*.*", SearchOption.AllDirectories))
+                    File.Delete(gamePathFile);
+                foreach (string newPath in Directory.GetFiles(livePath + "\\Game Backup", "*.*", SearchOption.AllDirectories))
+                    File.Copy(newPath, newPath.Replace(livePath + "\\Game Backup", gamePath), true);
+                PrintToConsole("\nFinished restoring game files to the backed up version.");
+            }
+            catch(System.IO.DirectoryNotFoundException)
+            {
+                PrintToConsole("\nYou don't have a backup to replace the original. Since you don't have a backup, it is recommended that you reinstall the game, so you can have an unmodded backup.");
+            }
         }
         private void PopulateModListBox()
         {

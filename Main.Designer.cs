@@ -44,7 +44,7 @@ namespace BTDModLoader
             this.Console = new System.Windows.Forms.RichTextBox();
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.ConsoleLabel = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -187,10 +187,10 @@ namespace BTDModLoader
             this.richTextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
             this.richTextBox3.ForeColor = System.Drawing.SystemColors.Control;
-            this.richTextBox3.Location = new System.Drawing.Point(861, -482);
+            this.richTextBox3.Location = new System.Drawing.Point(0, 26);
             this.richTextBox3.Name = "richTextBox3";
             this.richTextBox3.ReadOnly = true;
-            this.richTextBox3.Size = new System.Drawing.Size(886, 502);
+            this.richTextBox3.Size = new System.Drawing.Size(886, 578);
             this.richTextBox3.TabIndex = 11;
             this.richTextBox3.Text = resources.GetString("richTextBox3.Text");
             // 
@@ -205,16 +205,16 @@ namespace BTDModLoader
             this.label3.TabIndex = 12;
             this.label3.Text = "BTD Mod Loader";
             // 
-            // label6
+            // ConsoleLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(9, 485);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 17);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Console:";
+            this.ConsoleLabel.AutoSize = true;
+            this.ConsoleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.ConsoleLabel.ForeColor = System.Drawing.Color.White;
+            this.ConsoleLabel.Location = new System.Drawing.Point(9, 485);
+            this.ConsoleLabel.Name = "ConsoleLabel";
+            this.ConsoleLabel.Size = new System.Drawing.Size(63, 17);
+            this.ConsoleLabel.TabIndex = 14;
+            this.ConsoleLabel.Text = "Console:";
             // 
             // pictureBox2
             // 
@@ -311,7 +311,7 @@ namespace BTDModLoader
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.ClientSize = new System.Drawing.Size(884, 599);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.ConsoleLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.Console);
@@ -358,7 +358,7 @@ namespace BTDModLoader
         private System.Windows.Forms.RichTextBox Console;
         private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Label label3;
-        private Label label6;
+        private Label ConsoleLabel;
         private PictureBox pictureBox2;
         private ToolStrip toolStrip1;
         private ToolStripDropDownButton toolStripDropDownButton1;
