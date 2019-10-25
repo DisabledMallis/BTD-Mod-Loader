@@ -39,6 +39,9 @@ namespace BTDModLoader
             InitializeComponent();
             PopulateModListBox();
             PopulatePluginListBox();
+            label3.Hide();
+            pictureBox1.Hide();
+            richTextBox3.Hide();
         }
         private void Main_Load(object sender, EventArgs e)
         {
