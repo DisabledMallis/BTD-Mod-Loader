@@ -67,7 +67,7 @@ namespace BTDModLoader
             }
             catch (FileNotFoundException)
             {
-                richTextBox3.BringToFront();
+                installationTextBox.BringToFront();
                 label3.SendToBack();
 
                 browseForBTD5Folder();
@@ -75,14 +75,14 @@ namespace BTDModLoader
             }
             if (game == null || exeName == null || gamePath == null)
             {
-                richTextBox3.BringToFront();
+                installationTextBox.BringToFront();
                 label3.SendToBack();
 
                 browseForBTD5Folder();
                 seriealizeConfig();
             }
 
-            richTextBox3.SendToBack();
+            installationTextBox.SendToBack();
             if (lastMod == null)
             {
                 lastMod = "No Mods";
@@ -290,6 +290,10 @@ namespace BTDModLoader
         private void PopulateModListBox()
         {
             DirectoryInfo di =new DirectoryInfo(livePath + "\\Mods");
+            if (!di.Exists)
+            {
+                di.Create();
+            }
             FileInfo[] files = di.GetFiles("*.zip", SearchOption.AllDirectories);
 
             foreach (FileInfo file in files)
@@ -302,6 +306,10 @@ namespace BTDModLoader
         private void PopulatePluginListBox()
         {
             DirectoryInfo di =new DirectoryInfo(livePath + "\\Plugins");
+            if (!di.Exists)
+            {
+                di.Create();
+            }
             FileInfo[] files = di.GetFiles("*.dll", SearchOption.AllDirectories);
 
             PluginsListBox.SelectedIndex = 0;

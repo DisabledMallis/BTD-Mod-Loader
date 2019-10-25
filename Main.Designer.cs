@@ -42,7 +42,6 @@ namespace BTDModLoader
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Console = new System.Windows.Forms.RichTextBox();
-            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.ConsoleLabel = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -55,6 +54,7 @@ namespace BTDModLoader
             this.howToUseThisProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToUseModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToUsePluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installationTextBox = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -183,18 +183,6 @@ namespace BTDModLoader
             this.Console.TabIndex = 9;
             this.Console.Text = "";
             // 
-            // richTextBox3
-            // 
-            this.richTextBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.richTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
-            this.richTextBox3.ForeColor = System.Drawing.SystemColors.Control;
-            this.richTextBox3.Location = new System.Drawing.Point(-2, 23);
-            this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.ReadOnly = true;
-            this.richTextBox3.Size = new System.Drawing.Size(886, 578);
-            this.richTextBox3.TabIndex = 11;
-            this.richTextBox3.Text = resources.GetString("richTextBox3.Text");
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -305,6 +293,18 @@ namespace BTDModLoader
             this.howToUsePluginsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.howToUsePluginsToolStripMenuItem.Text = "How to use plugins";
             // 
+            // installationTextBox
+            // 
+            this.installationTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.installationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
+            this.installationTextBox.ForeColor = System.Drawing.SystemColors.Control;
+            this.installationTextBox.Location = new System.Drawing.Point(-2, 23);
+            this.installationTextBox.Name = "installationTextBox";
+            this.installationTextBox.ReadOnly = true;
+            this.installationTextBox.Size = new System.Drawing.Size(886, 578);
+            this.installationTextBox.TabIndex = 11;
+            this.installationTextBox.Text = resources.GetString("installationTextBox.Text");
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,7 +314,6 @@ namespace BTDModLoader
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.ConsoleLabel);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -326,6 +325,7 @@ namespace BTDModLoader
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.installationTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "BTD Mod Loader by Gurrenm3";
@@ -357,7 +357,6 @@ namespace BTDModLoader
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.RichTextBox Console;
-        private System.Windows.Forms.RichTextBox richTextBox3;
         private System.Windows.Forms.Label label3;
         private Label ConsoleLabel;
         private PictureBox pictureBox2;
@@ -370,6 +369,7 @@ namespace BTDModLoader
         private ToolStripMenuItem howToUseThisProgramToolStripMenuItem;
         private ToolStripMenuItem howToUseModsToolStripMenuItem;
         private ToolStripMenuItem howToUsePluginsToolStripMenuItem;
+        private RichTextBox installationTextBox;
     }
 }
 
