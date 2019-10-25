@@ -1,0 +1,1 @@
+Example mod is not a real mod, and won't make any changes to the game. It is just here to demonstrate HOW you should structure your mods so they work with this mod loader. Open Example Mod.zip if you need more info, or check the Github, or my youtube channel for more help: https://www.youtube.com/channel/UC4jiSUpzEIVpux4dfuSAhGQ 
