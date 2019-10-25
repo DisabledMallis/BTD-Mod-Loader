@@ -40,9 +40,7 @@ namespace BTDModLoader
             this.ModLoaderText = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Console = new System.Windows.Forms.RichTextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.ConsoleLabel = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -55,17 +53,31 @@ namespace BTDModLoader
             this.howToUseModsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.howToUsePluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installationTextBox = new System.Windows.Forms.RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.WelcomeButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // LaunchGame
             // 
-            this.LaunchGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.LaunchGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.LaunchGame.FlatAppearance.BorderSize = 0;
+            this.LaunchGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.LaunchGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.LaunchGame.ForeColor = System.Drawing.Color.White;
-            this.LaunchGame.Location = new System.Drawing.Point(656, 522);
+            this.LaunchGame.Location = new System.Drawing.Point(51, 566);
             this.LaunchGame.Name = "LaunchGame";
             this.LaunchGame.Size = new System.Drawing.Size(188, 55);
             this.LaunchGame.TabIndex = 0;
@@ -75,7 +87,7 @@ namespace BTDModLoader
             // 
             // ModsListBox
             // 
-            this.ModsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.ModsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ModsListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ModsListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.ModsListBox.ForeColor = System.Drawing.Color.White;
@@ -83,15 +95,15 @@ namespace BTDModLoader
             this.ModsListBox.ItemHeight = 20;
             this.ModsListBox.Items.AddRange(new object[] {
             "No Mods"});
-            this.ModsListBox.Location = new System.Drawing.Point(12, 156);
+            this.ModsListBox.Location = new System.Drawing.Point(333, 122);
             this.ModsListBox.Name = "ModsListBox";
-            this.ModsListBox.Size = new System.Drawing.Size(296, 302);
+            this.ModsListBox.Size = new System.Drawing.Size(296, 342);
             this.ModsListBox.TabIndex = 1;
             this.ModsListBox.SelectedIndexChanged += new System.EventHandler(this.ModsListBox_SelectedIndexChanged);
             // 
             // PluginsListBox
             // 
-            this.PluginsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.PluginsListBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.PluginsListBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PluginsListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.PluginsListBox.ForeColor = System.Drawing.Color.White;
@@ -99,18 +111,19 @@ namespace BTDModLoader
             this.PluginsListBox.ItemHeight = 20;
             this.PluginsListBox.Items.AddRange(new object[] {
             "No Plugins"});
-            this.PluginsListBox.Location = new System.Drawing.Point(314, 156);
+            this.PluginsListBox.Location = new System.Drawing.Point(635, 122);
             this.PluginsListBox.Name = "PluginsListBox";
             this.PluginsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.PluginsListBox.Size = new System.Drawing.Size(291, 302);
+            this.PluginsListBox.Size = new System.Drawing.Size(291, 342);
             this.PluginsListBox.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(14, 128);
+            this.label1.Location = new System.Drawing.Point(439, 94);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 25);
             this.label1.TabIndex = 3;
@@ -119,10 +132,10 @@ namespace BTDModLoader
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.BackColor = System.Drawing.Color.Black;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(314, 128);
+            this.label2.Location = new System.Drawing.Point(689, 94);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(174, 25);
             this.label2.TabIndex = 4;
@@ -141,9 +154,10 @@ namespace BTDModLoader
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Black;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(54, 82);
+            this.label4.Location = new System.Drawing.Point(417, 45);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(406, 17);
             this.label4.TabIndex = 6;
@@ -152,54 +166,35 @@ namespace BTDModLoader
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Black;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(12, 99);
+            this.label5.Location = new System.Drawing.Point(375, 62);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(497, 17);
             this.label5.TabIndex = 7;
             this.label5.Text = "Select \"No Mods\" or \"No Plugins\" if you dont want to play with mods or plugins";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(-290, -12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1440, 514);
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
-            // 
             // Console
             // 
-            this.Console.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.Console.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.Console.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Console.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.Console.ForeColor = System.Drawing.SystemColors.Window;
-            this.Console.Location = new System.Drawing.Point(12, 508);
+            this.Console.Location = new System.Drawing.Point(336, 515);
             this.Console.Name = "Console";
             this.Console.ReadOnly = true;
-            this.Console.Size = new System.Drawing.Size(593, 84);
+            this.Console.Size = new System.Drawing.Size(593, 103);
             this.Console.TabIndex = 9;
             this.Console.Text = "";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.25F);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(9, 26);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(242, 36);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "BTD Mod Loader";
             // 
             // ConsoleLabel
             // 
             this.ConsoleLabel.AutoSize = true;
+            this.ConsoleLabel.BackColor = System.Drawing.Color.Black;
             this.ConsoleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.ConsoleLabel.ForeColor = System.Drawing.Color.White;
-            this.ConsoleLabel.Location = new System.Drawing.Point(9, 485);
+            this.ConsoleLabel.Location = new System.Drawing.Point(333, 492);
             this.ConsoleLabel.Name = "ConsoleLabel";
             this.ConsoleLabel.Size = new System.Drawing.Size(63, 17);
             this.ConsoleLabel.TabIndex = 14;
@@ -208,21 +203,22 @@ namespace BTDModLoader
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.pictureBox2.Location = new System.Drawing.Point(9, 505);
+            this.pictureBox2.Location = new System.Drawing.Point(333, 512);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(599, 90);
+            this.pictureBox2.Size = new System.Drawing.Size(599, 109);
             this.pictureBox2.TabIndex = 15;
             this.pictureBox2.TabStop = false;
             // 
             // toolStrip1
             // 
-            this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.toolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.toolStripDropDownButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(884, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(947, 25);
             this.toolStrip1.TabIndex = 16;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -295,7 +291,7 @@ namespace BTDModLoader
             // 
             // installationTextBox
             // 
-            this.installationTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.installationTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.installationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F);
             this.installationTextBox.ForeColor = System.Drawing.SystemColors.Control;
             this.installationTextBox.Location = new System.Drawing.Point(-2, 23);
@@ -305,15 +301,109 @@ namespace BTDModLoader
             this.installationTextBox.TabIndex = 11;
             this.installationTextBox.Text = resources.GetString("installationTextBox.Text");
             // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Black;
+            this.pictureBox3.Location = new System.Drawing.Point(302, 483);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(672, 213);
+            this.pictureBox3.TabIndex = 17;
+            this.pictureBox3.TabStop = false;
+            // 
+            // WelcomeButton
+            // 
+            this.WelcomeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.WelcomeButton.FlatAppearance.BorderSize = 0;
+            this.WelcomeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.WelcomeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.25F);
+            this.WelcomeButton.ForeColor = System.Drawing.Color.White;
+            this.WelcomeButton.Location = new System.Drawing.Point(12, 44);
+            this.WelcomeButton.Name = "WelcomeButton";
+            this.WelcomeButton.Size = new System.Drawing.Size(280, 49);
+            this.WelcomeButton.TabIndex = 20;
+            this.WelcomeButton.Text = "Welcome";
+            this.WelcomeButton.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.25F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(12, 122);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(280, 49);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "BTD Mod Loader";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.25F);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(12, 204);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(280, 49);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "Mod Updater";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.Black;
+            this.pictureBox4.Location = new System.Drawing.Point(-9, -38);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(321, 691);
+            this.pictureBox4.TabIndex = 23;
+            this.pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.Color.Red;
+            this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox5.Location = new System.Drawing.Point(302, 25);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(10, 699);
+            this.pictureBox5.TabIndex = 24;
+            this.pictureBox5.TabStop = false;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.BackColor = System.Drawing.Color.Red;
+            this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox6.Location = new System.Drawing.Point(302, 479);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(645, 10);
+            this.pictureBox6.TabIndex = 25;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Black;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(-290, -12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1440, 514);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.ClientSize = new System.Drawing.Size(884, 599);
+            this.ClientSize = new System.Drawing.Size(947, 647);
+            this.Controls.Add(this.pictureBox6);
+            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.WelcomeButton);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.ConsoleLabel);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -324,6 +414,8 @@ namespace BTDModLoader
             this.Controls.Add(this.LaunchGame);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.installationTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -331,10 +423,14 @@ namespace BTDModLoader
             this.Text = "BTD Mod Loader by Gurrenm3";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed_1);
             this.Load += new System.EventHandler(this.Main_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,9 +451,7 @@ namespace BTDModLoader
         private System.Windows.Forms.Label ModLoaderText;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.RichTextBox Console;
-        private System.Windows.Forms.Label label3;
         private Label ConsoleLabel;
         private PictureBox pictureBox2;
         private ToolStrip toolStrip1;
@@ -370,6 +464,14 @@ namespace BTDModLoader
         private ToolStripMenuItem howToUseModsToolStripMenuItem;
         private ToolStripMenuItem howToUsePluginsToolStripMenuItem;
         private RichTextBox installationTextBox;
+        private PictureBox pictureBox3;
+        private Button WelcomeButton;
+        private Button button1;
+        private Button button2;
+        private PictureBox pictureBox4;
+        private PictureBox pictureBox5;
+        private PictureBox pictureBox6;
+        private PictureBox pictureBox1;
     }
 }
 

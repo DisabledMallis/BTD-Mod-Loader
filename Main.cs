@@ -67,17 +67,17 @@ namespace BTDModLoader
             }
             catch (FileNotFoundException)
             {
-                installationTextBox.BringToFront();
-                label3.SendToBack();
-
+                foreach(Control c in this.Controls)
+                {
+                    installationTextBox.BringToFront();
+                }
+                installationTextBox.Size = this.Size;
                 browseForBTD5Folder();
                 seriealizeConfig();
             }
             if (game == null || exeName == null || gamePath == null)
             {
                 installationTextBox.BringToFront();
-                label3.SendToBack();
-
                 browseForBTD5Folder();
                 seriealizeConfig();
             }
@@ -88,7 +88,6 @@ namespace BTDModLoader
                 lastMod = "No Mods";
                 ModsListBox.SelectedIndex = 0;
             }
-            label3.Text = game + " Mod Loader";
             PrintToConsole("\nProgram successfully loaded.");
             PrintToConsole("\nGame: " + game);
             PrintToConsole("\nChoose the mods/plugins you want to play with, then press 'Launch'");
@@ -123,17 +122,14 @@ namespace BTDModLoader
                         game = "BTDB";
                     }
                     PrintToConsole("\nGame: " + game);
-                    label3.Text = game + " Mod Loader";
-                    label3.BringToFront();
                 }
                 PrintToConsole("\nNo backup detected...");
                 Thread thread = new Thread(backupGame);
                 thread.Start();
-                label3.Text = game + " Mod Loader";
             }
             else
             {
-                Environment.Exit(0);
+                Application.Exit();
             }
         }
         private void backupGame()
